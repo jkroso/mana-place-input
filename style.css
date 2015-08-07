@@ -1,0 +1,72 @@
+.place-input {
+  position: relative;
+}
+
+.place-input input {
+  width: 100%;
+  border: 2px solid transparent;
+  /*box-shadow: 0 0 1px #3d464d;*/
+  outline: none;
+  border: 1px solid rgb(190, 190, 190);
+  padding: .5em 1em;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+.place-input input:focus {
+  border-color: #267dc0;
+  box-shadow: 0 0 0 transparent;
+}
+
+.place-input ul {
+  position: absolute;
+  top: 100%;
+  width: 100%;
+  max-height: 25em;
+  padding: 0;
+  margin: 0;
+  background: #fff;
+  list-style: none;
+  transition: max-height 0.2s, border 0.2s;
+}
+
+.place-input ul.hidden {
+  overflow: hidden;
+  max-height: 0;
+}
+
+.place-input ul li {
+  padding: .5em .65em;
+  cursor: pointer;
+}
+
+.place-input ul li span {
+  font-size: 0.75em;
+  opacity: 0.7;
+}
+
+.place-input ul li span.comma {
+  padding-right: 2px;
+}
+
+/* hide first comma */
+.place-input ul li span.comma:nth-of-type(2) {
+  opacity: 0;
+}
+
+.place-input ul li span:first-child {
+  font-size: 1em;
+  opacity: 1;
+}
+
+.place-input ul li:hover {
+  background: #f5f5f5;
+}
+
+.place-input ul li.active {
+  background: #267dc0;
+  color: #fff;
+}
+
+.place-input ul li.active:hover {
+  background: #ccc;
+}

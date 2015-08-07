@@ -1,0 +1,23 @@
+{
+  "name": "place-input",
+  "version": "0.0.0",
+  "description": "A UI component providing a text input with autocompletion by google",
+  "keywords": ["mana","google","place","input"],
+  "dependencies": {
+    "text-input": "jsiom/text-input",
+    "mana": "jkroso/mana",
+    "babelify": "*"
+  },
+  "devDependencies": {
+    "serve": "jkroso/serve",
+    "immutable": "3"
+  },
+  "browserify": {
+    "transform": [["babelify", {"jsxPragma": "JSX","stage":0}]]
+  },
+  "transpile": [["*.js", "!sourcegraph/babel->js", {"jsxPragma": "JSX", "stage": 0}]],
+  "repository": "git://github.com/jkroso/mana-place-input.git",
+  "author": "Jake Rosoman",
+  "files": ["index.js", "style.css"],
+  "license": "MIT"
+}

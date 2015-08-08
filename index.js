@@ -25,8 +25,13 @@ const getLocation = options =>
  * @return {VirtualElement}
  */
 
-const PlaceInput = params => {
-  var {cursor,placeholder,radius=0,location={lat:0,lng:0},country,autofocus,...rest} = params
+const PlaceInput = ({cursor,
+                     radius=0,
+                     placeholder='Which place?',
+                     location={lat:0,lng:0},
+                     autofocus,
+                     country,
+                     ...rest}) => {
   var items = cursor.value.get('suggestions') || []
   var activeIndex = Math.min(cursor.value.get('activeIndex', -1), items.length - 1)
   var interestedᶜ = cursor.get('userInterested')
@@ -73,7 +78,7 @@ const PlaceInput = params => {
   return <div class='place-input' {...rest}>
     <TextInput cursor={cursor.get('input')}
                value={activeItem.description}
-               placeholder={placeholder || 'Which place?'}
+               placeholder={placeholder}
                onKeyDown={onKeyDown}
                autofocus={autofocus}
                onChange={updateSuggestions}

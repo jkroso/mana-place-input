@@ -80,7 +80,7 @@ const PlaceInput = props => {
                onBlur={() => interestedᶜ.update(false)}/>
     <ul class={{hidden: !interestedᶜ.value || !items.length}}>
       {items.map((suggestion, i) =>
-        <Item active={i == activeIndex} index={i} value={suggestion} cursor={cursor}/>
+        <Item active={i == activeIndex} index={i} data={suggestion} cursor={cursor}/>
       )}
     </ul>
   </div>
@@ -94,9 +94,9 @@ const select = ({description,place_id}, cursor) =>
     activeIndex: -1
   })
 
-const onMousedown = (event, {params:{value,cursor}}) => {
+const onMousedown = (event, {params:{data,cursor}}) => {
   event.preventDefault()
-  select(value, cursor)
+  select(data, cursor)
 }
 
 const addTerm = (terms, {value}) => {
@@ -106,7 +106,7 @@ const addTerm = (terms, {value}) => {
 }
 
 const Item = params => {
-  const {active,value:{types,terms}} = params
+  const {active,data:{types,terms}} = params
   return <li class={(active ? types.concat('active') : types).join(' ')}
              onMousedown={onMousedown}>
     {terms.reduce(addTerm, [])}

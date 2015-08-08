@@ -19,16 +19,16 @@ const getLocation = options =>
  *
  * @param {Object} params
  *   @attr {Cursor} cursor
- *   @attr {Number} [radius=0]                affects the weighting towards local results
- *   @attr {Object} [location={lat:0,lng:0}]  results are weighted towards this point
- *   @attr {String} [country='earth']         limit results to a certain country
+ *   @attr {Number} [radius]  affects the weighting towards local results
+ *   @attr {Object} [center]  results are weighted towards this point
+ *   @attr {String} [country] limit results to a certain country
  * @return {VirtualElement}
  */
 
 const PlaceInput = ({cursor,
                      radius=0,
                      placeholder='Which place?',
-                     location={lat:0,lng:0},
+                     center={lat:0,lng:0},
                      autofocus,
                      country,
                      ...rest}) => {
@@ -68,7 +68,7 @@ const PlaceInput = ({cursor,
     if (!input) return onResults([])
     autocomplete.getPlacePredictions({
       input: input,
-      location: new LatLng(location.lat, location.lng),
+      location: new LatLng(center.lat, center.lng),
       radius: radius,
       types: ['geocode'],
       componentRestrictions: country && {country}
@@ -112,7 +112,7 @@ const addTerm = (terms, {value}) => {
 }
 
 const Item = ({active,data:{types,terms},...rest}) =>
-  <li class={(active ? types.concat('active') : types).join(' ')} 
+  <li class={(active ? types.concat('active') : types).join(' ')}
       onMousedown={onMousedown}
       {...rest}>
     {terms.reduce(addTerm, [])}

@@ -32,7 +32,7 @@
   var Input = require('./index')
   new App(immutable({}), function(cursor) {
     return JSX('body', null, Input({
-      location: {lat: -37.77, lng: 175.26},
+      center: {lat: -37.77, lng: 175.26},
       cursor: cursor,
       country: 'nz'
     }))

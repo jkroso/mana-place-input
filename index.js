@@ -5,21 +5,6 @@ const geocoder = new google.maps.Geocoder()
 const autocomplete = new google.maps.places.AutocompleteService()
 const LatLng = google.maps.LatLng
 
-const updateSuggestions = ({cursor,radius=0,location={lat:0,lng:0},country}, input) => {
-  var onResults = results => {
-    cursor.set('suggestions', results)
-    cursor.set('activeIndex', -1)
-  }
-  if (!input) return onResults([])
-  autocomplete.getPlacePredictions({
-    input: input,
-    location: new LatLng(location.lat, location.lng),
-    radius: radius,
-    types: ['geocode'],
-    componentRestrictions: country && {country}
-  }, onResults)
-}
-
 const getLocation = options =>
   new Promise((success, fail) => {
     geocoder.geocode(options, (results, status) => {
@@ -40,14 +25,15 @@ const getLocation = options =>
  * @return {VirtualElement}
  */
 
-const PlaceInput = props => {
-  var {cursor,placeholder} = props
+const PlaceInput = params => {
+  var {cursor,placeholder,radius=0,location={lat:0,lng:0},country} = params
   var items = cursor.value.get('suggestions') || []
-  var activeIndex = Math.min(cursor.value.get('activeIndex', -1), items.length)
+  var activeIndex = Math.min(cursor.value.get('activeIndex', -1), items.length - 1)
   var interestedᶜ = cursor.get('userInterested')
-  var activeItem = activeIndex >= 0 && activeIndex < items.length
+  var activeItem = activeIndex >= 0
     ? items[activeIndex]
     : {description:cursor.value.get('input') || ''}
+
   var onKeyDown = (event, {dom}) => {
     if (event.which == 40/*down*/ || event.which == 38/*up*/) {
       activeIndex = event.which == 40/*down*/
@@ -70,14 +56,27 @@ const PlaceInput = props => {
     if (event.which == 27/*esc*/) { dom.blur(); return }
     interestedᶜ.value || interestedᶜ.update(true)
   }
+
+  const updateSuggestions = input => {
+    var onResults = results => cursor.set('suggestions', results)
+    if (!input) return onResults([])
+    autocomplete.getPlacePredictions({
+      input: input,
+      location: new LatLng(location.lat, location.lng),
+      radius: radius,
+      types: ['geocode'],
+      componentRestrictions: country && {country}
+    }, onResults)
+  }
+
   return <div class='place-input'>
     <TextInput cursor={cursor.get('input')}
                value={activeItem.description}
                placeholder={placeholder || 'Which place?'}
                onKeyDown={onKeyDown}
-               onChange={value => updateSuggestions(props, value)}
+               onChange={updateSuggestions}
                onFocus={() => interestedᶜ.update(true)}
-               onBlur={() => interestedᶜ.update(false)}/>
+               onBlur={() => interestedᶜ.update(false)} />
     <ul class={{hidden: !interestedᶜ.value || !items.length}}>
       {items.map((suggestion, i) =>
         <Item active={i == activeIndex} index={i} data={suggestion} cursor={cursor}/>

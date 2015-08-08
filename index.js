@@ -58,6 +58,7 @@ const PlaceInput = params => {
   }
 
   const updateSuggestions = input => {
+    cursor.set('activeIndex', -1)
     var onResults = results => cursor.set('suggestions', results)
     if (!input) return onResults([])
     autocomplete.getPlacePredictions({

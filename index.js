@@ -45,6 +45,7 @@ const PlaceInput = params => {
     }
     else if (event.which == 13/*enter*/) {
       event.preventDefault()
+      if (!interestedᶜ.value) return interestedᶜ.update(true)
       var item = items[activeIndex]
       if (item) return select(item, cursor)
       cursor.merge({

@@ -36,14 +36,14 @@ const PlaceInput = params => {
 
   var onKeyDown = (event, {dom}) => {
     if (event.which == 40/*down*/ || event.which == 38/*up*/) {
+      event.preventDefault()
+      if (!interestedᶜ.value) return
       activeIndex = event.which == 40/*down*/
         ? Math.min(activeIndex + 1, items.length - 1)
         : Math.max(activeIndex - 1, -1)
-      cursor.merge({activeIndex, userInterested: true})
-      event.preventDefault()
-      return
+      cursor.set('activeIndex', activeIndex)
     }
-    if (event.which == 13/*enter*/) {
+    else if (event.which == 13/*enter*/) {
       event.preventDefault()
       var item = items[activeIndex]
       if (item) return select(item, cursor)
@@ -51,10 +51,9 @@ const PlaceInput = params => {
         location: getLocation({address:cursor.value.get('input')}),
         userInterested: false
       })
-      return
     }
-    if (event.which == 27/*esc*/) { dom.blur(); return }
-    interestedᶜ.value || interestedᶜ.update(true)
+    else if (event.which == 27/*esc*/) dom.blur()
+    else interestedᶜ.value || interestedᶜ.update(true)
   }
 
   const updateSuggestions = input => {

@@ -4,28 +4,24 @@
 
 .place-input input {
   width: 100%;
-  border: 2px solid transparent;
   outline: none;
   border: 1px solid rgb(190, 190, 190);
   padding: .5em 1em;
-  transition: border 0.2s, box-shadow 0.2s;
 }
 
 .place-input input:focus {
   border-color: #267dc0;
-  box-shadow: 0 0 0 transparent;
 }
 
 .place-input ul {
   position: absolute;
-  top: 100%;
   width: 100%;
   max-height: 25em;
   padding: 0;
   margin: 0;
   background: #fff;
   list-style: none;
-  transition: max-height 0.2s, border 0.2s;
+  transition: max-height 0.2s;
 }
 
 .place-input ul.hidden {

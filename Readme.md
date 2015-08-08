@@ -2,7 +2,7 @@
 
 A nice UI component for users to input a place name with autocompletion provided by google. The UX mirrors googles own place inputs so it should feel the same to users. Therefore, this module is purely for your benefit. It provides an idiomatic Mana API and cleaner CSS
 
-[Live Demo](http://jkroso.github.io/mana-place-input)
+[Live Demo](http://jkroso.github.io/mana-place-input/example.html)
 
 ## Installation
 

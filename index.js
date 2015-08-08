@@ -111,12 +111,11 @@ const addTerm = (terms, {value}) => {
   return terms
 }
 
-const Item = params => {
-  const {active,data:{types,terms}} = params
-  return <li class={(active ? types.concat('active') : types).join(' ')}
-             onMousedown={onMousedown}>
+const Item = ({active,data:{types,terms},...rest}) =>
+  <li class={(active ? types.concat('active') : types).join(' ')} 
+      onMousedown={onMousedown}
+      {...rest}>
     {terms.reduce(addTerm, [])}
-  </li>.mergeParams(params)
-}
+  </li>
 
 export default PlaceInput

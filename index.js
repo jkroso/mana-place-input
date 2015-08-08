@@ -26,7 +26,7 @@ const getLocation = options =>
  */
 
 const PlaceInput = params => {
-  var {cursor,placeholder,radius=0,location={lat:0,lng:0},country} = params
+  var {cursor,placeholder,radius=0,location={lat:0,lng:0},country,autofocus,...rest} = params
   var items = cursor.value.get('suggestions') || []
   var activeIndex = Math.min(cursor.value.get('activeIndex', -1), items.length - 1)
   var interestedᶜ = cursor.get('userInterested')
@@ -70,11 +70,12 @@ const PlaceInput = params => {
     }, onResults)
   }
 
-  return <div class='place-input'>
+  return <div class='place-input' {...rest}>
     <TextInput cursor={cursor.get('input')}
                value={activeItem.description}
                placeholder={placeholder || 'Which place?'}
                onKeyDown={onKeyDown}
+               autofocus={autofocus}
                onChange={updateSuggestions}
                onFocus={() => interestedᶜ.update(true)}
                onBlur={() => interestedᶜ.update(false)} />

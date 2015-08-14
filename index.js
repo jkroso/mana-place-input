@@ -29,7 +29,7 @@ const PlaceInput = ({cursor,
                      radius=0,
                      placeholder='Which place?',
                      center={lat:0,lng:0},
-                     autofocus,
+                     autofocus=false,
                      country,
                      ...rest}) => {
   var items = cursor.value.get('suggestions') || []
@@ -50,7 +50,7 @@ const PlaceInput = ({cursor,
     }
     else if (event.which == 13/*enter*/) {
       event.preventDefault()
-      if (!interestedᶜ.value) return interestedᶜ.update(true)
+      if (!interestedᶜ.value) return interestedᶜ.value = true
       var item = items[activeIndex]
       if (item) return select(item, cursor)
       cursor.merge({
@@ -59,7 +59,7 @@ const PlaceInput = ({cursor,
       })
     }
     else if (event.which == 27/*esc*/) dom.blur()
-    else interestedᶜ.value || interestedᶜ.update(true)
+    else if (!interestedᶜ.value) interestedᶜ.value = true
   }
 
   const updateSuggestions = input => {
@@ -82,8 +82,8 @@ const PlaceInput = ({cursor,
                onKeyDown={onKeyDown}
                autofocus={autofocus}
                onChange={updateSuggestions}
-               onFocus={() => interestedᶜ.update(true)}
-               onBlur={() => interestedᶜ.update(false)} />
+               onFocus={() => interestedᶜ.value = true}
+               onBlur={() => interestedᶜ.value = false} />
     <ul class={{hidden: !interestedᶜ.value || !items.length}}>
       {items.map((suggestion, i) =>
         <Item active={i == activeIndex} index={i} data={suggestion} cursor={cursor}/>

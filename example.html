@@ -30,12 +30,18 @@
   var App = require('mana/app').App
   var JSX = require('mana').JSX
   var Input = require('./index')
-  new App(immutable({}), function(cursor) {
+  var app = new App(immutable({}), function(cursor) {
     return JSX('body', null, Input({
       center: {lat: -37.77, lng: 175.26},
       autofocus: true,
       cursor: cursor,
       country: 'nz'
     }))
+  })
+  app.atom.addListener(function(next, prev) {
+    prev = prev.get('location')
+    next = next.get('location')
+    if (prev == next) return
+    Promise.resolve(next).then(function(location){ console.log(location) })
   })
 </script>

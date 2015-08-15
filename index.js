@@ -26,6 +26,7 @@ const getLocation = options =>
  */
 
 const PlaceInput = ({cursor,
+                     locationᶜ,
                      radius=0,
                      placeholder='Which place?',
                      center={lat:0,lng:0},
@@ -38,6 +39,7 @@ const PlaceInput = ({cursor,
   var activeItem = activeIndex >= 0
     ? items[activeIndex]
     : {description:cursor.value.get('input') || ''}
+  locationᶜ = locationᶜ || cursor.get('location')
 
   var onKeyDown = (event, {dom}) => {
     if (event.which == 40/*down*/ || event.which == 38/*up*/) {
@@ -52,11 +54,9 @@ const PlaceInput = ({cursor,
       event.preventDefault()
       if (!interestedᶜ.value) return interestedᶜ.value = true
       var item = items[activeIndex]
-      if (item) return select(item, cursor)
-      cursor.merge({
-        location: getLocation({address:cursor.value.get('input')}),
-        userInterested: false
-      })
+      if (item) return select(item, cursor, locationᶜ)
+      interestedᶜ.value = false
+      locationᶜ.value = getLocation({address:cursor.value.get('input')})
     }
     else if (event.which == 27/*esc*/) dom.blur()
     else if (!interestedᶜ.value) interestedᶜ.value = true
@@ -75,6 +75,11 @@ const PlaceInput = ({cursor,
     }, onResults)
   }
 
+  const onMousedown = (event, {params:{data}}) => {
+    event.preventDefault()
+    select(data, cursor, locationᶜ)
+  }
+
   return <div class='place-input' {...rest}>
     <TextInput cursor={cursor.get('input')}
                value={activeItem.description}
@@ -86,23 +91,15 @@ const PlaceInput = ({cursor,
                onBlur={() => interestedᶜ.value = false} />
     <ul class={{hidden: !interestedᶜ.value || !items.length}}>
       {items.map((suggestion, i) =>
-        <Item active={i == activeIndex} index={i} data={suggestion} cursor={cursor}/>
+        <Item active={i == activeIndex} index={i} data={suggestion} onMousedown={onMousedown}/>
       )}
     </ul>
   </div>
 }
 
-const select = ({description,place_id}, cursor) =>
-  cursor.merge({
-    location: getLocation({placeId: place_id}),
-    userInterested: false,
-    input: description,
-    activeIndex: -1
-  })
-
-const onMousedown = (event, {params:{data,cursor}}) => {
-  event.preventDefault()
-  select(data, cursor)
+const select = ({description,place_id}, cursor, locationᶜ) => {
+  locationᶜ.value = getLocation({placeId: place_id})
+  cursor.merge({userInterested: false, input: description, activeIndex: -1})
 }
 
 const addTerm = (terms, {value}) => {
@@ -112,9 +109,7 @@ const addTerm = (terms, {value}) => {
 }
 
 const Item = ({active,data:{types,terms},...rest}) =>
-  <li class={(active ? types.concat('active') : types).join(' ')}
-      onMousedown={onMousedown}
-      {...rest}>
+  <li class={(active ? types.concat('active') : types).join(' ')} {...rest}>
     {terms.reduce(addTerm, [])}
   </li>
 

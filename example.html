@@ -26,22 +26,20 @@
 </style>
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
 <script type="text/javascript">
-  var immutable = require('immutable').fromJS
-  var App = require('mana/app').App
-  var JSX = require('mana').JSX
-  var Input = require('./index')
-  var app = new App(immutable({}), function(cursor) {
-    return JSX('body', null, Input({
-      center: {lat: -37.77, lng: 175.26},
-      autofocus: true,
-      cursor: cursor,
-      country: 'nz'
-    }))
+  const immutable = require('immutable').fromJS
+  const {App,JSX} = require('mana')
+  const Input = require('./index')
+  const app = new App(immutable({}), cursor => {
+    return <Input center={{lat: -37.77, lng: 175.26}}
+                  autofocus={true}
+                  country='nz'
+                  cursor/>
   })
-  app.atom.addListener(function(next, prev) {
+  app.cursor.addListener((next, prev) => {
     prev = prev.get('location')
     next = next.get('location')
     if (prev == next) return
-    Promise.resolve(next).then(function(location){ console.log(location) })
+    Promise.resolve(next).then(location => console.log(location))
   })
+  window.onload = () => app.mountIn(document.body)
 </script>

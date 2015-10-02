@@ -15,7 +15,7 @@
   "browserify": {
     "transform": [["babelify", {"jsxPragma": "JSX","stage":0}]]
   },
-  "transpile": [["*.js", "!sourcegraph/babel->js", {"jsxPragma": "JSX", "stage": 0}]],
+  "transpile": [["*.js", "!sourcegraph/babel->js", {"stage": 0}]],
   "repository": "git://github.com/jkroso/mana-place-input.git",
   "author": "Jake Rosoman",
   "files": ["index.js", "style.css"],

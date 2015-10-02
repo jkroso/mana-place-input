@@ -104,7 +104,7 @@ const select = ({description,place_id}, cursor, locationᶜ) => {
 
 const addTerm = (terms, {value}) => {
   if (terms.length) terms.push(<span class='comma'>,</span>)
-  terms.push(<span class='term'>{value}</span>)
+  terms.push(<span class='term'> {value}</span>)
   return terms
 }
 

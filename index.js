@@ -41,7 +41,7 @@ const PlaceInput = ({cursor,
     : {description:cursor.value.get('input') || ''}
   locationᶜ = locationᶜ || cursor.get('location')
 
-  var onKeyDown = (event, {dom}) => {
+  var onKeyDown = (event, _, dom) => {
     if (event.which == 40/*down*/ || event.which == 38/*up*/) {
       event.preventDefault()
       if (!interestedᶜ.value) return
@@ -108,7 +108,7 @@ const addTerm = (terms, {value}) => {
   return terms
 }
 
-const Item = ({active, data,...rest}) =>
+const Item = ({active, data, ...rest}) =>
   <li data class={(active ? data.types.concat('active') : data.types).join(' ')} {...rest}>
     {data.terms.reduce(addTerm, [])}
   </li>

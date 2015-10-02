@@ -108,9 +108,9 @@ const addTerm = (terms, {value}) => {
   return terms
 }
 
-const Item = ({active,data:{types,terms},...rest}) =>
-  <li class={(active ? types.concat('active') : types).join(' ')} {...rest}>
-    {terms.reduce(addTerm, [])}
+const Item = ({active, data,...rest}) =>
+  <li data class={(active ? data.types.concat('active') : data.types).join(' ')} {...rest}>
+    {data.terms.reduce(addTerm, [])}
   </li>
 
 export default PlaceInput

@@ -31,6 +31,7 @@ const PlaceInput = ({cursor,
                      placeholder='Which place?',
                      center={lat:0,lng:0},
                      autofocus=false,
+                     types=[],
                      country,
                      ...rest}) => {
   var items = cursor.value.get('suggestions') || []
@@ -67,11 +68,11 @@ const PlaceInput = ({cursor,
     var onResults = results => cursor.set('suggestions', results)
     if (!input) return onResults([])
     autocomplete.getPlacePredictions({
-      input: input,
       location: new LatLng(center.lat, center.lng),
-      radius: radius,
-      types: ['geocode'],
-      componentRestrictions: country && {country}
+      componentRestrictions: country && {country},
+      input,
+      radius,
+      types
     }, onResults)
   }
 

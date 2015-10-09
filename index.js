@@ -81,7 +81,7 @@ const PlaceInput = ({cursor,
     select(data, cursor, locationᶜ)
   }
 
-  return <div class='place-input' {...rest}>
+  return <div class="place-input">
     <TextInput cursor={cursor.get('input')}
                value={activeItem.description}
                placeholder={placeholder}
@@ -91,14 +91,11 @@ const PlaceInput = ({cursor,
                onFocus={() => interestedᶜ.value = true}
                onBlur={() => interestedᶜ.value = false} />
     <ul class={{hidden: !interestedᶜ.value || !items.length}}>
-      {items.map((suggestion, index) =>
-        <Item class={{active: index == activeIndex}}
-              data={suggestion}
-              onMousedown
-              index/>
+      {items.map((data, index) =>
+        <Item class={{active: index == activeIndex}} data onMousedown index/>
       )}
     </ul>
-  </div>
+  </div>.mergeParams(rest)
 }
 
 const select = ({description,place_id}, cursor, locationᶜ) => {

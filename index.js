@@ -91,8 +91,11 @@ const PlaceInput = ({cursor,
                onFocus={() => interestedᶜ.value = true}
                onBlur={() => interestedᶜ.value = false} />
     <ul class={{hidden: !interestedᶜ.value || !items.length}}>
-      {items.map((suggestion, i) =>
-        <Item active={i == activeIndex} index={i} data={suggestion} onMousedown={onMousedown}/>
+      {items.map((suggestion, index) =>
+        <Item class={{active: index == activeIndex}}
+              data={suggestion}
+              onMousedown
+              index/>
       )}
     </ul>
   </div>
@@ -104,14 +107,14 @@ const select = ({description,place_id}, cursor, locationᶜ) => {
 }
 
 const addTerm = (terms, {value}) => {
-  if (terms.length) terms.push(<span class='comma'>,</span>)
-  terms.push(<span class='term'> {value}</span>)
+  if (terms.length) terms.push(<span class="comma">,</span>)
+  terms.push(<span class="term"> {value}</span>)
   return terms
 }
 
-const Item = ({active, data, ...rest}) =>
-  <li data class={(active ? data.types.concat('active') : data.types).join(' ')} {...rest}>
+const Item = ({data, ...rest}) =>
+  <li data class={data.types.join(' ')}>
     {data.terms.reduce(addTerm, [])}
-  </li>
+  </li>.mergeParams(rest)
 
 export default PlaceInput

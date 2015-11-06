@@ -1,5 +1,5 @@
-const TextInput = require('text-input')
-const {JSX} = require('mana')
+import TextInput from 'text-input'
+import {JSX} from 'mana'
 
 const geocoder = new google.maps.Geocoder()
 const autocomplete = new google.maps.places.AutocompleteService()

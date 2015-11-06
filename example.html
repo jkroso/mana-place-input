@@ -26,9 +26,9 @@
 </style>
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
 <script type="text/javascript">
-  const immutable = require('immutable').fromJS
-  const {App,JSX} = require('mana')
-  const Input = require('./index')
+  import {fromJS as immutable} from 'immutable'
+  import {App,JSX} from 'mana'
+  import Input from './index'
   const app = new App(immutable({}), cursor => {
     return <Input center={{lat: -37.77, lng: 175.26}}
                   autofocus={true}

@@ -6,18 +6,15 @@
   "dependencies": {
     "text-input": "jsiom/text-input",
     "mana": "jkroso/mana",
-    "babelify": "*"
+    "easy-style": "1"
   },
   "devDependencies": {
     "serve": "jkroso/serve",
     "immutable": "3"
   },
-  "browserify": {
-    "transform": [["babelify", {"jsxPragma": "JSX","stage":0}]]
-  },
   "transpile": [["*.js", "!sourcegraph/babel->js", {"stage": 0}]],
   "repository": "git://github.com/jkroso/mana-place-input.git",
   "author": "Jake Rosoman",
-  "files": ["index.js", "style.css"],
+  "files": ["index.js"],
   "license": "MIT"
 }

@@ -1,4 +1,5 @@
 import TextInput from 'text-input'
+import {style} from 'easy-style'
 import {JSX} from 'mana'
 
 const geocoder = new google.maps.Geocoder()
@@ -13,6 +14,51 @@ const getLocation = options =>
       success({lat: location.lat(), lng: location.lng()})
     })
   })
+
+const className = style({
+  position: 'relative',
+  '> input': {
+    border: '1px solid rgb(190, 190, 190)',
+    padding: '.5em 1em',
+    outline: 'none',
+    width: '100%',
+    '&:focus': {borderColor: '#267dc0'}
+  },
+  '> ul': {
+    position: 'absolute',
+    width: '100%',
+    maxHeight: '25em',
+    padding: 0,
+    margin: 0,
+    background: '#fff',
+    listStyle: 'none',
+    transition: 'max-height 0.2s',
+    '&.hidden': {
+      overflowY: 'scroll',
+      maxHeight: 0
+    },
+    '> li': {
+      padding: '.5em .65em',
+      cursor: 'pointer',
+      '&:hover': {background: '#f5f5f5'},
+      '&.active': {
+        background: '#267dc0',
+        color: '#fff',
+        '&:hover': {background: '#ccc'}
+      },
+      '> span': {
+        fontSize: '0.75em',
+        opacity: 0.7,
+        // hide first comma
+        '&.comma:nth-of-type(2)': {display: 'none'},
+        '&:first-child': {
+          fontSize: '1em',
+          opacity: 1
+        }
+      }
+    }
+  }
+})
 
 /**
  * A nice UI for entering a place
@@ -81,7 +127,7 @@ const PlaceInput = ({cursor,
     select(data, cursor, locationᶜ)
   }
 
-  return <div class="place-input">
+  return <div className>
     <TextInput cursor={cursor.get('input')}
                value={activeItem.description}
                placeholder={placeholder}
@@ -89,7 +135,7 @@ const PlaceInput = ({cursor,
                autofocus={autofocus}
                onChange={updateSuggestions}
                onFocus={() => interestedᶜ.value = true}
-               onBlur={() => interestedᶜ.value = false} />
+               onBlur={() => interestedᶜ.value = false}/>
     <ul class={{hidden: !interestedᶜ.value || !items.length}}>
       {items.map((data, index) =>
         <Item class={{active: index == activeIndex}} data onMousedown index/>

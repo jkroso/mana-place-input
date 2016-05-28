@@ -80,12 +80,12 @@ const PlaceInput = ({cursor,
                      types=[],
                      country,
                      ...rest}) => {
-  var items = cursor.value.get('suggestions') || []
-  var activeIndex = Math.min(cursor.value.get('activeIndex', -1), items.length - 1)
+  var items = cursor.get('suggestions').value || []
+  var activeIndex = Math.min(cursor.get('activeIndex').value, items.length - 1)
   var interestedᶜ = cursor.get('userInterested')
   var activeItem = activeIndex >= 0
     ? items[activeIndex]
-    : {description:cursor.value.get('input') || ''}
+    : {description:cursor.get('input').value || ''}
   locationᶜ = locationᶜ || cursor.get('location')
 
   var onKeyDown = (event, _, dom) => {
